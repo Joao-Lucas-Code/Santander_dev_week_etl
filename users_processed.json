@@ -5,7 +5,7 @@
     "news": [
       {
         "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
-        "description": "Invista hoje para um futuro melhor!"
+        "description": "João Lucas, faça seu dinheiro trabalhar para você! Invista e garanta um futuro próspero. (80 caracteres)"
       }
     ]
   },
@@ -15,7 +15,7 @@
     "news": [
       {
         "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
-        "description": "Invista hoje para um futuro melhor!"
+        "description": "Maria, faça seu dinheiro trabalhar para você! Invista no seu futuro e realize seus sonhos."
       }
     ]
   },
@@ -25,7 +25,7 @@
     "news": [
       {
         "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
-        "description": "Invista hoje para um futuro melhor!"
+        "description": "Pep, seus sonhos merecem mais. Invista e faça seu dinheiro trabalhar por você! (70 caracteres)"
       }
     ]
   }

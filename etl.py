@@ -13,7 +13,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # Função para gerar notícias usando IA
 def generate_ai_news(user):
     # ATENÇÃO: Mudamos para o modelo mais atual 'gemini-1.5-flash'
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-flash')
     
     # Prompt enviado para a IA
     prompt = f"Você é um especialista em marketing bancário. Crie uma mensagem curta e impactante para {user['name']} sobre a importância dos investimentos (máximo de 100 caracteres)."
