@@ -26,18 +26,18 @@ Este projeto é um pipeline de **ETL (Extract, Transform, Load)** reestruturado 
 
 ### 1. Clone o repositório
 
-git clone [https://github.com/SEU-USUARIO/nome-do-seu-repo.git](https://github.com/SEU-USUARIO/nome-do-seu-repo.git)
+git clone [https://github.com/SEU-USUARIO/nome-do-seu-repo.git](https://github.com/Joao-Lucas-Code/Santander_Dev_Week_ETL)
 cd nome-do-seu-repo
 
 ### 2. Crie o ambiente virtual (Recomendado)
 
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-
-# Windows
+#### Windows
 python -m venv venv
 .\venv\Scripts\activate
+
+#### macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 
 ### 3. Instale as dependências
 pip install -r requirements.txt
