@@ -1,5 +1,4 @@
 import pandas as pd
-import requests
 import json
 import os
 import google.generativeai as genai
@@ -10,12 +9,8 @@ load_dotenv()
 
 # Configuração do Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-sdw_api_url = os.getenv("SDW_API_URL", "https://sdw-2023-prd.up.railway.app")
 
-def get_user(id):
-    response = requests.get(f'{sdw_api_url}/users/{id}')
-    return response.json() if response.status_code == 200 else None
-
+# Função para gerar notícias usando IA (MANTIDA)
 def generate_ai_news(user):
     # Instancia o modelo Gemini Pro
     model = genai.GenerativeModel('gemini-pro')
@@ -28,40 +23,36 @@ def generate_ai_news(user):
         return response.text.strip()
     except Exception as e:
         print(f"Erro na geração do Gemini: {e}")
-        return "Invista hoje para um futuro melhor!" # Fallback em caso de erro
-
-def update_user(user):
-    response = requests.put(f"{sdw_api_url}/users/{user['id']}", json=user)
-    return True if response.status_code == 200 else False
+        return "Invista hoje para um futuro melhor!"
 
 def main():
-    # 1. Extract
-    print("Iniciando Extração...")
-    try:
-        df = pd.read_csv('SDW2023.csv')
-        user_ids = df['UserID'].tolist()
-        users = [user for id in user_ids if (user := get_user(id)) is not None]
-        print(f"{len(users)} usuários encontrados.")
-    except Exception as e:
-        print(f"Erro na extração: {e}")
-        return
+    print("⚠️ API do Santander Indisponível. Iniciando Modo Mock (Simulação)...")
+    
+    # 1. Extract (SIMULADO - Criamos usuários na mão)
+    users = [
+        {"id": 1, "name": "João Lucas", "news": []},
+        {"id": 2, "name": "Maria", "news": []},
+        {"id": 3, "name": "Pep", "news": []}
+    ]
+    print(f"{len(users)} usuários simulados carregados na memória.")
 
-    # 2. Transform (Com Gemini)
+    # 2. Transform (IA com Gemini - ISSO É REAL)
     print("\nIniciando Transformação (IA com Gemini)...")
     for user in users:
         news = generate_ai_news(user)
-        print(f"Mensagem para {user['name']}: {news}")
+        print(f"✅ Mensagem gerada para {user['name']}: \"{news}\"")
         
         user['news'].append({
             "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
             "description": news
         })
 
-    # 3. Load
-    print("\nIniciando Carga...")
-    for user in users:
-        success = update_user(user)
-        print(f"Usuário {user['name']} atualizado? {success}!")
+    # 3. Load (SIMULADO - Apenas salvamos num arquivo JSON local para provar que funcionou)
+    print("\nIniciando Carga (Salvando em arquivo local)...")
+    with open('users_processed.json', 'w', encoding='utf-8') as f:
+        json.dump(users, f, indent=2, ensure_ascii=False)
+    
+    print("\n🎉 Processo finalizado! Confira o arquivo 'users_processed.json'.")
 
 if __name__ == "__main__":
     main()
