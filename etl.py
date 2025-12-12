@@ -2,32 +2,36 @@ import pandas as pd
 import requests
 import json
 import os
-import openai
+import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Carrega variáveis de ambiente (sua API Key)
+# Carrega variáveis de ambiente
 load_dotenv()
 
-# Configurações
-openai.api_key = os.getenv("OPENAI_API_KEY")
-SDW2023_API_URL = 'https://sdw-2023-prd.up.railway.app'
+# Configuração do Gemini
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+sdw_api_url = os.getenv("SDW_API_URL", "https://sdw-2023-prd.up.railway.app")
 
 def get_user(id):
-    response = requests.get(f'{SDW2023_API_URL}/users/{id}')
+    response = requests.get(f'{sdw_api_url}/users/{id}')
     return response.json() if response.status_code == 200 else None
 
 def generate_ai_news(user):
-    completion = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "Você é um especialista em marketing bancário."},
-            {"role": "user", "content": f"Crie uma mensagem para {user['name']} sobre a importância dos investimentos (máximo de 100 caracteres)"}
-        ]
-    )
-    return completion.choices[0].message.content.strip('\"')
+    # Instancia o modelo Gemini Pro
+    model = genai.GenerativeModel('gemini-pro')
+    
+    # Prompt enviado para a IA
+    prompt = f"Você é um especialista em marketing bancário. Crie uma mensagem curta e impactante para {user['name']} sobre a importância dos investimentos (máximo de 100 caracteres)."
+    
+    try:
+        response = model.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        print(f"Erro na geração do Gemini: {e}")
+        return "Invista hoje para um futuro melhor!" # Fallback em caso de erro
 
 def update_user(user):
-    response = requests.put(f"{SDW2023_API_URL}/users/{user['id']}", json=user)
+    response = requests.put(f"{sdw_api_url}/users/{user['id']}", json=user)
     return True if response.status_code == 200 else False
 
 def main():
@@ -42,18 +46,16 @@ def main():
         print(f"Erro na extração: {e}")
         return
 
-    # 2. Transform
-    print("\nIniciando Transformação (IA)...")
+    # 2. Transform (Com Gemini)
+    print("\nIniciando Transformação (IA com Gemini)...")
     for user in users:
-        try:
-            news = generate_ai_news(user)
-            print(f"Mensagem gerada para {user['name']}: {news}")
-            user['news'].append({
-                "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
-                "description": news
-            })
-        except Exception as e:
-            print(f"Erro ao gerar IA para {user['name']}: {e}")
+        news = generate_ai_news(user)
+        print(f"Mensagem para {user['name']}: {news}")
+        
+        user['news'].append({
+            "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
+            "description": news
+        })
 
     # 3. Load
     print("\nIniciando Carga...")
