@@ -17,17 +17,20 @@ Este projeto é um pipeline de **ETL (Extract, Transform, Load)** reestruturado 
 
 ## ⚙️ Funcionalidades do Pipeline
 
-1.  **Extract (Extração):** * Simula uma base de dados de clientes bancários (IDs e Nomes) em memória (substituindo a requisição GET da API original).
-2.  **Transform (Transformação):** * Integração com a API do **Google Gemini**.
+1.  **Extract (Extração):**
+    * Simula uma base de dados de clientes bancários (IDs e Nomes) em memória (substituindo a requisição GET da API original).
+2.  **Transform (Transformação):**
+    * Integração com a API do **Google Gemini**.
     * A IA analisa o perfil do usuário e gera uma mensagem de marketing única e impactante sobre investimentos.
-3.  **Load (Carga):** * Salva os dados enriquecidos (com a mensagem gerada) em um arquivo local `users_processed.json`, simulando a persistência dos dados (substituindo o PUT na API).
+3.  **Load (Carga):**
+    * Salva os dados enriquecidos (com a mensagem gerada) em um arquivo local `users_processed.json`, simulando a persistência dos dados (substituindo o PUT na API).
 
 ## 🛠️ Como executar
 
 ### 1. Clone o repositório
 
-git clone [https://github.com/Joao-Lucas-Code/Santander_Dev_Week_ETL](https://github.com/Joao-Lucas-Code/Santander_Dev_Week_ETL)
-cd nome-do-seu-repo
+git clone https://github.com/Joao-Lucas-Code/Santander_Dev_Week_ETL.git
+cd Santander_Dev_Week_ETL
 
 ### 2. Crie o ambiente virtual (Recomendado)
 
