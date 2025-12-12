@@ -27,8 +27,6 @@ Este projeto é um pipeline de **ETL (Extract, Transform, Load)** desenvolvido d
 
 3. Configure as variáveis de ambiente
     - `OPENAI_API_KEY`: Sua chave de API da OpenAI.
-    - `SDW_API_URL`: URL base da API do Santander Dev Week.
-    - `SDW_API_KEY`: Sua chave
 
 4. Execute o script ETL:
    ```bash
